@@ -11,6 +11,7 @@ else
   $artist = $_REQUEST['artist'];
   $song = $_REQUEST['song'];
 }
+$song = str_replace(" ","",$song);
 function ge($url)
 {
   $ch = curl_init( $url );
