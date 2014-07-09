@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);
+$html = false;
 if(isset($argc) && $argc == 3)
 {
 $nl = "\n";
@@ -8,7 +9,8 @@ $song = $argv[2];
 }
 else
 {
-  $nl = "<br />";
+  $nl = "<br />\n";
+  $html = true;
   $artist = $_REQUEST['artist'];
   $song = $_REQUEST['song'];
 }
@@ -27,8 +29,16 @@ foreach ($children as $child)
   $innerHTML .= $div->ownerDocument->saveHTML($child);
 }
 $result = str_replace("<br>",$nl,substr($innerHTML,9));
+if($html)
+{
+  echo "<!DOCTYPE html>\n<html>\n<head>\n<title>" . $dom->getElementsByTagName('title')->item(0)->textContent . "</title>\n</head>\n<body>\n";
+}
 echo "Lyrics for: " . $header -> textContent . $nl;
 echo $result;
+if($html)
+{
+  echo "\n</body>\n</html>";
+}
 function fix($a)
 {
   return str_replace(" ","",str_replace(".","",$a));
