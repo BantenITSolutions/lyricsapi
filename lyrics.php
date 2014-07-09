@@ -28,7 +28,7 @@ foreach ($children as $child)
 {
   $innerHTML .= $div->ownerDocument->saveHTML($child);
 }
-$result = str_replace("<br>",$nl,substr($innerHTML,9));
+$result = str_replace("’","'",str_replace("<br>",$nl,substr($innerHTML,9)));
 if($html)
 {
   echo "<!DOCTYPE html>\n<html>\n<head>\n<title>" . $dom->getElementsByTagName('title')->item(0)->textContent . "</title>\n</head>\n<body>\n";
