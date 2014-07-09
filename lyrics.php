@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL);
-if($argc > 0)
+if(isset($argc))
 {
-  $htmlo = false;
+  define("CLI",true);
   if($argc != 3) die("Usage: {$argv[0]} <artist> <song>\n");
   $nl = "\n";
   $artist = $argv[1];
@@ -10,8 +10,8 @@ if($argc > 0)
 }
 else
 {
+  define("CLI",false);
   $nl = "<br />\n";
-  $htmlo = true;
   $artist = $_REQUEST['artist'];
   $song = $_REQUEST['song'];
 }
@@ -30,24 +30,19 @@ foreach ($children as $child)
   $innerHTML .= $div->ownerDocument->saveHTML($child);
 }
 $result = str_replace("’","'",str_replace("<br>",$nl,substr($innerHTML,9)));
-if($htmlo)
-{
-  echo "<!DOCTYPE html>\n<html>\n<head>\n<title>" . $dom->getElementsByTagName('title')->item(0)->textContent . "</title>\n</head>\n<body>\n";
-}
+if(!CLI) echo "<!DOCTYPE html>\n<html>\n<head>\n<title>" . $dom->getElementsByTagName('title')->item(0)->textContent . "</title>\n</head>\n<body>\n";
 echo "Lyrics for: " . $header -> textContent . $nl;
 echo $result;
-if($htmlo)
-{
-  echo "\n</body>\n</html>";
-}
+if(!CLI) echo "\n</body>\n</html>";
 function fix($a)
 {
   return str_replace(" ","",str_replace(".","",$a));
 }
 function ge($url)
 {
-  if(!is_dir("cache")) mkdir("cache");
-  $cachename = "cache" . DIRECTORY_SEPARATOR . str_replace("/","-",$url);
+  $cdir = CLI ? $_SERVER['HOME'] . DIRECTORY_SEPARATOR . ".cache" : "cache";
+  if(!is_dir($cdir)) mkdir($cdir);
+  $cachename = $cdir . DIRECTORY_SEPARATOR . str_replace("/","-",$url);
   if(file_exists($cachename)) return file_get_contents($cachename);
   $ch = curl_init( $url );
   curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
@@ -61,4 +56,4 @@ function ge($url)
   file_put_contents($cachename,$response[1]);
   return $response[1];
 }
-echo "\n";
+if(CLI) echo "\n";
