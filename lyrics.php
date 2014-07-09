@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL);
-$html = false;
-if(isset($argc))
+if($argc > 0)
 {
+  $htmlo = false;
   if($argc != 3) die("Usage: {$argv[0]} <artist> <song>\n");
   $nl = "\n";
   $artist = $argv[1];
@@ -11,7 +11,7 @@ if(isset($argc))
 else
 {
   $nl = "<br />\n";
-  $html = true;
+  $htmlo = true;
   $artist = $_REQUEST['artist'];
   $song = $_REQUEST['song'];
 }
@@ -30,13 +30,13 @@ foreach ($children as $child)
   $innerHTML .= $div->ownerDocument->saveHTML($child);
 }
 $result = str_replace("’","'",str_replace("<br>",$nl,substr($innerHTML,9)));
-if($html)
+if($htmlo)
 {
   echo "<!DOCTYPE html>\n<html>\n<head>\n<title>" . $dom->getElementsByTagName('title')->item(0)->textContent . "</title>\n</head>\n<body>\n";
 }
 echo "Lyrics for: " . $header -> textContent . $nl;
 echo $result;
-if($html)
+if($htmlo)
 {
   echo "\n</body>\n</html>";
 }
@@ -61,3 +61,4 @@ function ge($url)
   file_put_contents($cachename,$response[1]);
   return $response[1];
 }
+echo "\n";
