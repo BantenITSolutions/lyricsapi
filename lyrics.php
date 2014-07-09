@@ -45,6 +45,9 @@ function fix($a)
 }
 function ge($url)
 {
+  if(!is_dir("cache")) mkdir("cache");
+  $cachename = "cache" . DIRECTORY_SEPARATOR . str_replace("/","-",$url);
+  if(file_exists($cachename)) return file_get_contents($cachename);
   $ch = curl_init( $url );
   curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
   curl_setopt( $ch, CURLOPT_HEADER, true );
@@ -54,5 +57,6 @@ function ge($url)
   $response = preg_split( '/([\r\n][\r\n])\\1/', $a);
   $response = preg_split( '/([\r\n][\r\n]){2}/', $a,2);
   curl_close( $ch );
+  file_put_contents($cachename,$response[1]);
   return $response[1];
 }
