@@ -1,11 +1,12 @@
 <?php
 error_reporting(E_ALL);
 $html = false;
-if(isset($argc) && $argc == 3)
+if(isset($argc))
 {
-$nl = "\n";
-$artist = $argv[1];
-$song = $argv[2];
+  if($argc != 3) die("Usage: {$argv[0]} <artist> <song>\n");
+  $nl = "\n";
+  $artist = $argv[1];
+  $song = $argv[2];
 }
 else
 {
