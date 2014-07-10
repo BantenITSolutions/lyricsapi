@@ -49,6 +49,7 @@ function ge($url)
   curl_setopt( $ch, CURLOPT_HEADER, false );
   curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
   curl_setopt( $ch, CURLOPT_BINARYTRANSFER, true);
+  curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:32.0) Gecko/20100101 Firefox/32.0");
   $restext = curl_exec( $ch );
   curl_close( $ch );
   file_put_contents($cachename,$restext);
