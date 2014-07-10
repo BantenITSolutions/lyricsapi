@@ -46,14 +46,12 @@ function ge($url)
   if(file_exists($cachename)) return file_get_contents($cachename);
   $ch = curl_init( $url );
   curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
-  curl_setopt( $ch, CURLOPT_HEADER, true );
+  curl_setopt( $ch, CURLOPT_HEADER, false );
   curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-  curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:32.0) Gecko/20100101 Firefox/32.0");
-  $a = curl_exec( $ch );
-  $response = preg_split( '/([\r\n][\r\n])\\1/', $a);
-  $response = preg_split( '/([\r\n][\r\n]){2}/', $a,2);
+  curl_setopt( $ch, CURLOPT_BINARYTRANSFER, true);
+  $restext = curl_exec( $ch );
   curl_close( $ch );
-  file_put_contents($cachename,$response[1]);
-  return $response[1];
+  file_put_contents($cachename,$restext);
+  return $restext;
 }
 if(CLI) echo "\n";
