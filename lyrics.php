@@ -26,6 +26,7 @@ $div = $header;
 while($div->tagName != "div")
 {
   $div = $div ->nextSibling;
+  print_r($div);
 }
 $innerHTML = "";
 $children  = $div->childNodes;
