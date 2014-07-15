@@ -23,9 +23,7 @@ $html = ge("http://www.azlyrics.com/lyrics/{$artist}/{$song}.html");
 $b = $dom->getElementsByTagName('b');
 $header = $b->item(0);
 $div = $header;
-print_r($div);
-die();
-while($div->tagName != "DIV")
+while($div->tagName != "div")
 {
   $div = $div ->nextSibling;
 }
