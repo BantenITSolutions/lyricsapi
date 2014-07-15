@@ -22,7 +22,13 @@ $html = ge("http://www.azlyrics.com/lyrics/{$artist}/{$song}.html");
 @$dom->loadHTML($html);
 $b = $dom->getElementsByTagName('b');
 $header = $b->item(0);
-$div = $header->nextSibling->nextSibling->nextSibling;
+$div = $header;
+print_r($div);
+die();
+while($div->tagName != "DIV")
+{
+  $div = $div ->nextSibling;
+}
 $innerHTML = "";
 $children  = $div->childNodes;
 foreach ($children as $child)
