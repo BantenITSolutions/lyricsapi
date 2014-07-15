@@ -21,7 +21,7 @@ $dom = new DOMDocument();
 $html = ge("http://www.azlyrics.com/lyrics/{$artist}/{$song}.html");
 if(strlen($html < 1))
 {
-  die("Azlyrics send an empty reply, aborting.");
+  die("Azlyrics send an empty reply, aborting.\n");
 }
 @$dom->loadHTML($html);
 $b = $dom->getElementsByTagName('b');
