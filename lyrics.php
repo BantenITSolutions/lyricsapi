@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(0);
 if(isset($argc))
 {
   define("CLI",true);
@@ -27,9 +27,12 @@ if(strlen($html) < 1)
 $b = $dom->getElementsByTagName('b');
 $header = $b->item(0);
 $div = $header;
+$a = 0;
 while($div->tagName != "div")
 {
   $div = $div ->nextSibling;
+  $a++;
+  if($a> 100)die("ERROR\n");
 }
 $innerHTML = "";
 $children  = $div->childNodes;
@@ -37,9 +40,9 @@ foreach ($children as $child)
 {
   $innerHTML .= $div->ownerDocument->saveHTML($child);
 }
-$result = str_replace("’","'",str_replace("<br>",$nl,substr($innerHTML,9)));
+$result = str_replace("’","'",str_replace("<br>",$nl,substr($innerHTML,27)));
 if(!CLI) echo "<!DOCTYPE html>\n<html>\n<head>\n<title>" . $dom->getElementsByTagName('title')->item(0)->textContent . "</title>\n</head>\n<body>\n";
-echo "Lyrics for: " . $header -> textContent . $nl;
+echo "Lyrics for: " . $header -> textContent . $nl . $nl;
 echo $result;
 if(!CLI) echo "\n</body>\n</html>";
 function fix($a)
